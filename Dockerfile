@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
+RUN apk update && apk add npm
+
 # Install dependencies
 RUN npm install
 
@@ -14,7 +16,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm start
+RUN npm run start
 
 # Stage 2: Create a lightweight production image
 FROM node:14-alpine
