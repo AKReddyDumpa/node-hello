@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
-RUN apk update && apk add npm
+RUN apk update && apk add nodejs-npm
 
 # Install dependencies
 RUN npm install
