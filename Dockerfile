@@ -1,5 +1,5 @@
-# Use an official Node.js runtime as the base image
-FROM node:14-alpine
+# Stage 1: Build the application
+FROM node:14 AS builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -12,6 +12,19 @@ RUN npm install
 
 # Copy the rest of the application code
 COPY . .
+
+RUN npm ci
+
+# Stage 2: Create a lightweight production image
+FROM node:14-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy built files from the previous stage
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
 # Expose the port your app runs on
 EXPOSE 3000
