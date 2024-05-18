@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN npm run start
 
 # Stage 2: Create a lightweight production image
 FROM node:19.5.0-alpine
